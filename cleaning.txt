@@ -1,0 +1,45 @@
+!pip install pandas
+!pip install dash
+
+import pandas as pd
+import plotly.express as px
+
+
+
+
+
+rdf = pd.read_csv('Downloads/archive/brazil_covid19.csv')
+
+# Nordeste filter
+norDf = rdf[rdf['region'] == 'Nordeste']
+print('Filtered')
+
+# Separation by state
+dfList = []
+states = ['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE']
+
+for state in states:
+    stateDf = norDf[norDf['state'] == state]
+    stateDf = stateDf.drop(['region'], axis=1)
+    dfList.append(stateDf)
+print('Separated')
+
+# Graphic generation
+counter = 0
+
+# Visualização de mortes dificultada
+#for df in dfList:        
+#    newDf = df[df['state'] == states[counter]]
+#    newDf = newDf.drop(['state'], axis=1)
+#    fig = px.bar(newDf, x="date", y=["deaths", "cases"], title=f"Cases/Deaths overtime by state: {states[counter]}")
+#    fig.show()
+#    counter = counter + 1
+    
+for df in dfList:        
+    newDf = df[df['state'] == states[counter]]
+    newDf = newDf.drop(['state'], axis=1)
+    fig = px.bar(newDf, x="date", y="deaths", color="deaths", title=f"Cases/Deaths overtime by state: {states[counter]}")
+    fig.show()
+    fig = px.bar(newDf, x="date", y="cases", color="cases")
+    fig.show()
+    counter = counter + 1
