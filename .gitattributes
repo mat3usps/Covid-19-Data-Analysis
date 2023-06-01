@@ -1,0 +1,2 @@
+brazil_covid19_cities.csv filter=lfs diff=lfs merge=lfs -text
+brazil_covid19_cities-checkpoint.csv filter=lfs diff=lfs merge=lfs -text
